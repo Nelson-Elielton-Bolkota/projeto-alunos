@@ -19,8 +19,8 @@
 <body>
 
     <header>
-        <h1>Painel Acadêmico</h1>
-        <!-- O menu compartilhado (Desafio) será incluído aqui depois -->
+    <h1>Painel Acadêmico</h1>
+    @include('partials/nav')
     </header>
 
     <div class="container">
