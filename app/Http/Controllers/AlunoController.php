@@ -6,6 +6,7 @@ use App\Models\Aluno;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAlunoRequest; 
 use App\Models\Curso;
+use Illuminate\Support\Facades\Gate;
 
 class AlunoController extends Controller
 {
@@ -20,17 +21,17 @@ class AlunoController extends Controller
 
     public function create()
     {
-        return view('alunos.create'); 
+        Gate::authorize('create', Aluno::class); // Verifica se o usuário pode criar Alunos
+        return view('alunos.create');
     }
-
     
-    public function store(StoreAlunoRequest $request) 
-{
-    
-    Aluno::create($request->validated());
+    public function store(StoreAlunoRequest $request)
+    {
+        Gate::authorize('create', Aluno::class); // Protege o envio de novos dados
+        Aluno::create($request->validated());
 
-    return redirect()->route('alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso!');
-}
+        return redirect()->route('alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso!');
+    }
 
     public function show(string $id)
     {
@@ -41,20 +42,16 @@ class AlunoController extends Controller
     public function edit(string $id)
     {
         $aluno = Aluno::findOrFail($id);
+        Gate::authorize('update', $aluno); // Verifica se o usuário logado pode editar este aluno específico
+        
         return view('alunos.edit', compact('aluno'));
     }
-    public function update(Request $request, string $id)
+    
+    public function update(StoreAlunoRequest $request, string $id)
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'curso' => 'required|string|max:255',
-        ]);
-
         $aluno = Aluno::findOrFail($id);
-        $aluno->update([
-            'nome' => $request->nome,
-            'curso' => $request->curso,
-        ]);
+        Gate::authorize('update', $aluno); // Protege a atualização do registro
+        $aluno->update($request->validated());
 
         return redirect()->route('alunos.index')->with('sucesso', 'Dados do aluno atualizados com sucesso!');
     }
@@ -62,7 +59,8 @@ class AlunoController extends Controller
     public function destroy(string $id)
     {
         $aluno = Aluno::findOrFail($id);
-        $aluno->delete(); 
+        Gate::authorize('delete', $aluno); // Verifica se pode deletar o registro no PostgreSQL
+        $aluno->delete();
 
         return redirect()->route('alunos.index')->with('sucesso', 'Aluno removido com sucesso!');
     }
