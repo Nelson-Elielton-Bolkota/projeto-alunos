@@ -1,38 +1,20 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AlunoController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/sobre', function () {
-    return 'Página Sobre: Informações sobre o sistema.';
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/alunos', function () {
-    return 'Página de Alunos: Listagem geral de estudantes.';
-});
-
-Route::get('/contato', function () {
-    return 'Página de Contato: Fale conosco.';
-});
-//atv2
-Route::get('/produto/{id}', function ($id) {
-    return "Exibindo detalhes do Produto com ID: " . $id;
-});
-
-Route::get('/categoria/{id}', function ($id) {
-    return "Exibindo produtos da Categoria com ID: " . $id;
-});
-
-Route::get('/usuario/{id}', function ($id) {
-    return "Perfil do Usuário com ID: " . $id;
-});
-// ATV 4: Rotas de recurso para o CRUD de Alunos
-Route::resource('alunos', AlunoController::class);
-// Rota para exibir os alunos de um determinado curso
-Route::get('/cursos/{id}/alunos', [AlunoController::class, 'alunosPorCurso'])->name('cursos.alunos');
-
-
+require __DIR__.'/auth.php';
