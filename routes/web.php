@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlunoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -29,3 +30,6 @@ Route::get('/categoria/{id}', function ($id) {
 Route::get('/usuario/{id}', function ($id) {
     return "Perfil do Usuário com ID: " . $id;
 });
+// ATV 4: Rotas de recurso para o CRUD de Alunos
+Route::resource('alunos', AlunoController::class);
+
