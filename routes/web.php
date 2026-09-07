@@ -17,3 +17,15 @@ Route::get('/alunos', function () {
 Route::get('/contato', function () {
     return 'Página de Contato: Fale conosco.';
 });
+//atv2
+Route::get('/produto/{id}', function ($id) {
+    return "Exibindo detalhes do Produto com ID: " . $id;
+});
+
+Route::get('/categoria/{id}', function ($id) {
+    return "Exibindo produtos da Categoria com ID: " . $id;
+});
+
+Route::get('/usuario/{id}', function ($id) {
+    return "Perfil do Usuário com ID: " . $id;
+});
