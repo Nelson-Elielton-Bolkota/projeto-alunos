@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Aluno;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAlunoRequest; 
+use App\Models\Curso;
 
 class AlunoController extends Controller
 {
@@ -61,8 +62,15 @@ class AlunoController extends Controller
     public function destroy(string $id)
     {
         $aluno = Aluno::findOrFail($id);
-        $aluno->delete(); // Remove do PostgreSQL [1, 3]
+        $aluno->delete(); 
 
         return redirect()->route('alunos.index')->with('sucesso', 'Aluno removido com sucesso!');
+    }
+    public function alunosPorCurso(string $id)
+    {
+        
+        $curso = Curso::with('alunos')->findOrFail($id);
+        
+        return view('cursos.alunos', compact('curso'));
     }
 }

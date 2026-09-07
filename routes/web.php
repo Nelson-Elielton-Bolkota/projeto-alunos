@@ -32,4 +32,7 @@ Route::get('/usuario/{id}', function ($id) {
 });
 // ATV 4: Rotas de recurso para o CRUD de Alunos
 Route::resource('alunos', AlunoController::class);
+// Rota para exibir os alunos de um determinado curso
+Route::get('/cursos/{id}/alunos', [AlunoController::class, 'alunosPorCurso'])->name('cursos.alunos');
+
 
