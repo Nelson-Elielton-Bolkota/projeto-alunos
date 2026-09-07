@@ -18,3 +18,16 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Rotas de teste para validar o Middleware (ATV 21)
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return 'Área Restrita - Bem-vindo ao Painel do Administrador!';
+    });
+});
+
+Route::middleware(['auth', 'role:professor'])->group(function () {
+    Route::get('/professor', function () {
+        return 'Área Restrita - Bem-vindo ao Painel do Professor!';
+    });
+});
