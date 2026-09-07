@@ -33,4 +33,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Aluno::class);
     }
+    protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'role', 
+    ];
 }
