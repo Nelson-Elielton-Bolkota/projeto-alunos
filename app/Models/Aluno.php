@@ -30,4 +30,8 @@ class Aluno extends Model
     {
         return self::count();
     }
+    public function curso()
+    {
+        return $this->belongsTo(Curso::class);
+    }
 }
