@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Aluno;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAlunoRequest; 
 
 class AlunoController extends Controller
 {
@@ -12,59 +13,35 @@ class AlunoController extends Controller
      */
     public function index()
     {
-        $alunos = Aluno::all(); // Busca todos os alunos no PostgreSQL [1, 3]
-        return view('alunos.index', compact('alunos')); // Passa a lista para a view [2]
+        $alunos = Aluno::all(); 
+        return view('alunos.index', compact('alunos')); 
     }
 
-    /**
-     * Mostra o formulário para criar um novo aluno.
-     */
     public function create()
     {
-        return view('alunos.create'); // Retorna a view do formulário [2]
+        return view('alunos.create'); 
     }
 
-    /**
-     * Salva o novo aluno no banco de dados.
-     */
-    public function store(Request $request)
-    {
-        // Validação básica direta (será refinada no Tema 8)
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'curso' => 'required|string|max:255',
-        ]);
+    
+    public function store(StoreAlunoRequest $request) 
+{
+    
+    Aluno::create($request->validated());
 
-        // Grava no PostgreSQL através do Eloquent Model [1, 3]
-        Aluno::create([
-            'nome' => $request->nome,
-            'curso' => $request->curso,
-        ]);
+    return redirect()->route('alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso!');
+}
 
-        return redirect()->route('alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso!');
-    }
-
-    /**
-     * Exibe as informações de um aluno específico.
-     */
     public function show(string $id)
     {
         $aluno = Aluno::findOrFail($id); // Busca pelo ID ou retorna erro 404 [1]
         return view('alunos.show', compact('aluno'));
     }
 
-    /**
-     * Mostra o formulário para editar os dados de um aluno.
-     */
     public function edit(string $id)
     {
         $aluno = Aluno::findOrFail($id);
         return view('alunos.edit', compact('aluno'));
     }
-
-    /**
-     * Atualiza os dados do aluno no banco de dados.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -81,9 +58,6 @@ class AlunoController extends Controller
         return redirect()->route('alunos.index')->with('sucesso', 'Dados do aluno atualizados com sucesso!');
     }
 
-    /**
-     * Remove o aluno do banco de dados.
-     */
     public function destroy(string $id)
     {
         $aluno = Aluno::findOrFail($id);
