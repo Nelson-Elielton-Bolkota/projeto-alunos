@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Detalhes do Aluno</title>
-</head>
-<body>
-    <h1>Detalhes do Aluno</h1>
-    <p>Exibindo informações detalhadas de um aluno específico.</p>
-</body>
-</html>
+@extends('layouts/app')
+
+@section('titulo', 'Detalhes do Aluno')
+
+@section('conteudo')
+    <h2>Dados do Aluno</h2>
+    <p><strong>Nome:</strong> Ana Silva</p>
+    <p><strong>Curso:</strong> Análise e Desenvolvimento de Sistemas</p>
+    <p><strong>Status:</strong> Ativo</p>
+@stop
