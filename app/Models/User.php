@@ -29,4 +29,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function aluno()
+    {
+        return $this->hasOne(Aluno::class);
+    }
+    protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'role', 
+    ];
 }

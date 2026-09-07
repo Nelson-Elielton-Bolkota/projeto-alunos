@@ -1,58 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Gestão Acadêmica (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Projeto feito para a lista de atividades práticas de Laravel da disciplina, com orientação do professor Dionatan Inhoato Markiu. É um sistema de gerenciamento acadêmico simples, cobrindo desde rotas básicas até autenticação, permissões e segurança.
 
-## About Laravel
+## Autores
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Nelson Elielton Bolkota
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tecnologias
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Laravel
+- PostgreSQL (via pgAdmin)
+- Laravel Breeze (autenticação)
+- Blade + Tailwind CSS (vem com o Breeze)
 
-## Learning Laravel
+## Organização do repositório
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Cada tema da lista tem sua própria branch, e cada atividade (ATV) virou um commit separado. Ficou assim:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+**tema-rotas**
+- ATV 1: rotas simples (`/sobre`, `/alunos`, `/contato`)
+- ATV 2: rotas parametrizadas (`/produto/{id}`, `/categoria/{id}`, `/usuario/{id}`)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+**tema-controllers**
+- ATV 3: controller de recursos `AlunoController`
+- ATV 4: as 7 rotas básicas de CRUD no controller
 
-## Agentic Development
+**tema-views**
+- ATV 5: estrutura de pastas das views de alunos
+- ATV 6: arquivos Blade principais do CRUD de alunos
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+**tema-blade**
+- ATV 7: layout base em `layouts/app.blade.php`
+- ATV 8: páginas Blade (home, index, show, create)
+- ATV 9: diretivas Blade (`@extends`, `@section`, `@include`, `@if`, `@foreach`)
+- Desafio: menu de navegação compartilhado via `@include`
+
+**tema-models-eloquent**
+- ATV 10: Model `Aluno` e migration
+- ATV 11: consultas Eloquent personalizadas
+
+**tema-seeders**
+- ATV 12: `AlunoSeeder` populando o banco com 10 alunos de teste
+
+**tema-crud**
+- ATV 13: lógica funcional do CRUD no controller
+
+**tema-forms-requests**
+- ATV 14: formulário HTML de cadastro
+- ATV 15: validações com Form Request
+- Desafio: mensagens de erro de validação em português
+
+**tema-relacionamentos**
+- ATV 16: Model `Curso` e migração do relacionamento 1-para-muitos
+- ATV 17: chave estrangeira na tabela de alunos
+- Desafio: view listando alunos agrupados por curso
+
+**tema-autenticacao**
+- ATV 18: integração do Laravel Breeze
+- ATV 19: relação entre `User` e `Aluno`
+- ATV 20: coluna `role` na tabela `users`
+
+**tema-middleware**
+- ATV 21: middleware restringindo `/admin` e `/professor`
+
+**tema-policies**
+- ATV 22: `AlunoPolicy` protegendo as ações do CRUD
+- ATV 23: regras por perfil (admin cadastra/exclui, professor edita)
+
+## Rodando o projeto localmente
+
+Clone o repositório:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone <URL_DO_SEU_REPOSITORIO>
+cd <NOME_DA_PASTA_DO_PROJETO>
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Instale as dependências:
 
-## Contributing
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Copie o `.env.example` para `.env` e configure o PostgreSQL:
 
-## Code of Conduct
+```bash
+cp .env.example .env
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+No `.env`, ajuste:
 
-## Security Vulnerabilities
+```
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=nome_do_seu_banco
+DB_USERNAME=postgres
+DB_PASSWORD=sua_senha_do_pgadmin
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Crie o banco correspondente no pgAdmin antes de seguir.
 
-## License
+Gere a chave da aplicação:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan key:generate
+```
+
+Rode as migrações e popule o banco:
+
+```bash
+php artisan migrate --seed
+```
+
+Compile os assets e suba o servidor:
+
+```bash
+npm run dev
+```
+
+Em outro terminal:
+
+```bash
+php artisan serve
+```
+
+Acesse em `http://localhost:8000`.
